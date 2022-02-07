@@ -1124,6 +1124,7 @@ class TemplateCompiler:
         """ % os.linesep
         rc = re.compile(pattern, re.VERBOSE | re.MULTILINE)
         split = rc.split(template_data)
+        params_pattern = re.compile(r"(?:\".*?\"|\S)+", re.VERBOSE)
         tokens = []
         for statement in split:
             if statement.startswith("<TMPL_") or \
@@ -1134,7 +1135,7 @@ class TemplateCompiler:
                 statement = self.strip_brackets(statement)
                 statement = self.strip_ending_slash(statement)
 
-                params = re.split(r"\s+", statement)
+                params = params_pattern.findall(statement)
                 tokens.append(self.find_directive(params))
                 tokens.append(self.find_name(params))
                 tokens.append(self.find_param("ESCAPE", params))
