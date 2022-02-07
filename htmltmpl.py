@@ -905,8 +905,8 @@ class TemplateProcessor:
         """ Return true if var is a scalar. (not a reference to loop)
             @hidden
         """
-        return isinstance(var, str) or isisntance(var, int) or \
-            isinstance(var, long) or isisntance(var, float)
+        return (isinstance(var, str) or isinstance(var, int)
+                or isinstance(var, float))
 
 
 ##############################################
